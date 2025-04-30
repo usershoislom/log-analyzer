@@ -1,25 +1,20 @@
-import os
-import sys
-
 from reports.base import BaseReport, register_report
 
 
 @register_report("handlers")
 class HandlersReport(BaseReport):
-    def __init__(self, files):
-        super().__init__(files)
-
     def process(self):
         for path in self.files:
-            if not os.path.isfile(path):
-                print(f"Ошибка: файл {path} не найден.")
-                sys.exit(1)
-            with open(path, 'r') as f:
+            with open(path, encoding="utf-8") as f:
                 for line in f:
-                    if "django.request" in line:
-                        self.report_content += line
+                    if "django.request" not in line:
+                        continue
+                    endpoint = self.extract_endpoint(line)
+                    level = self.extract_log_level(line)
+
+                    if endpoint and level:
+                        self.counter[endpoint][level] += 1
                         self.total_requests += 1
 
     def generate(self):
-        print(self.report_content)
-        print(self.total_requests)
+        self.print_summary()
