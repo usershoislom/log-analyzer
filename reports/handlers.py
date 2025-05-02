@@ -7,8 +7,6 @@ class HandlersReport(BaseReport):
         for path in self.files:
             with open(path, encoding="utf-8") as f:
                 for line in f:
-                    if "django.request" not in line:
-                        continue
                     endpoint = self.extract_endpoint(line)
                     level = self.extract_log_level(line)
 
