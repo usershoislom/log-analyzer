@@ -11,8 +11,10 @@
     cd log-analyzer
     ```
 
-2. Установите зависимости:
+2. Установите зависимости в виртуальном окружении:
     ```bash
+    python3 -m venv venv
+    source venv/bin/activate
     pip install -r requirements.txt
     ```
 
@@ -21,7 +23,7 @@
 Приложение позволяет генерировать отчёт по запросам к API-эндпоинтам. Пример использования:
 
 ```bash
-python3 main.py tests/app3.log --report handlers
+python3 main.py <пути к логам> --report handlers
 ```
 ![Скриншот отчёта](img.png)
 
