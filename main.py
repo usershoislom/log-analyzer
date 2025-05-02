@@ -10,7 +10,7 @@ def parse_args():
         "--report",
         required=True,
         choices=REPORT_TYPES.keys(),
-        help="Название отчёта",
+        help="введите название отчёта",
     )
     return parser.parse_args()
 
@@ -19,10 +19,6 @@ def main():
     args = parse_args()
 
     report_class = REPORT_TYPES.get(args.report)
-    if not report_class:
-        print(f"Ошибка: отчёт '{args.report}' не найден.")
-        print(f"Доступные отчёты: {', '.join(REPORT_TYPES.keys())}")
-        sys.exit(1)
     report = report_class(args.files)
     report.run()
 
